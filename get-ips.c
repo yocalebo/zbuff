@@ -53,7 +53,8 @@ int main(int argc, char *argv[])
 
 	memset(&hints, 0, sizeof(hints));//Initialize the addrinfo struct and zero it out
 	hints.ai_family = AF_UNSPEC; //Don't care if it's ip4 or ip6
-	hints.ai_socktype = SOCK_STREAM; //TCP stream
+	hints.ai_socktype = SOCK_RAW; //any type of socket
+	hints.ai_protocol = IPPROTO_SCTP;
 
 	//if getaddrinfo returns anything other than 0, error out
 	if ((status = getaddrinfo(argv[1], NULL, &hints, &res)) != 0) {
