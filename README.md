@@ -14,5 +14,5 @@ Some of the reasons for choosing SCTP are as follows:
 Future work
 - Add the ability to choose between TCP/UDP
 - Add the ability to use ESP/IPSEC to encrypt IP payload
-  --(this gives benefit of not having to pipe to SSH etc.)
-  --(also offload crypto functions to Intel QAT cards.)
+  -(this gives benefit of not having to pipe to SSH etc.)
+  -(also offload crypto functions to Intel QAT cards.)
