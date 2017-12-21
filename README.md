@@ -7,7 +7,7 @@ Some of the reasons for choosing SCTP are as follows:
 - Acknowledged, error-free non-duplicated transfer of data
 - Data fragmentation to conform to discovered maximum transmission unit (MTU) size
 - Sequenced delivery of user messages with-in multiple streams
-- Optional bundling of multiple user messages in to an SCTPpacket
+- Optional bundling of multiple user messages in to an SCTP packet
 - ImprovedSYN-flood protection by utilizing a 4-way handshake in the intialization of an association
 - Preservation of message boundaries
 
