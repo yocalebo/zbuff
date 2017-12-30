@@ -8,10 +8,10 @@ Some of the reasons for choosing SCTP are as follows:
 - Data fragmentation to conform to discovered maximum transmission unit (MTU) size
 - Sequenced delivery of user messages with-in multiple streams
 - Optional bundling of multiple user messages in to an SCTP packet
-- ImprovedSYN-flood protection by utilizing a 4-way handshake in the intialization of an association
+- Improved SYN-flood protection by utilizing a 4-way handshake in the intialization of an association
 - Preservation of message boundaries
 
 Future work
 - Add the ability to choose between TCP/UDP
-- Add the ability to use ESP/IPSEC to encrypt IP payload
+- Add the ability to use DTLS to encrypt data chunks per RFC 6083
 - Add the ability to offload crypto functions to Intel QAT cards or equivalent hardware
