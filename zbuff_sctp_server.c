@@ -1,6 +1,6 @@
-BSD 3-Clause License
+/*BSD 3-Clause License
 
-Copyright (c) 2017, Caleb St. John 
+Copyright (c) 2018, Caleb St. John 
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -26,7 +26,7 @@ DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
 SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.*/
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -55,10 +55,8 @@ main ()
         struct sctp_sndrcvinfo sndrcvinfo;
         char buffer[BUFFER+1];
 
-        listenSock = socket(AF_INET, SOCK_STREAM, IPPROTO_SCTP);
-        if(listenSock == -1)
-        {
-                fprintf(stderr, "Function socket() failed!\n");
+        if ((listenSock = socket(AF_INET, SOCK_STREAM, IPPROTO_SCTP)) < 0) {
+		fprintf(stderr, "Function socket() failed!\n");
                 exit(1);
         }
 
@@ -68,9 +66,7 @@ main ()
         servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
         servaddr.sin_port = htons(PORT);
 
-        ret = bind(listenSock, (struct sockaddr *) &servaddr, sizeof(servaddr));
-        if(ret == -1)
-        {
+        if ((ret = bind(listenSock, (struct sockaddr *) &servaddr, sizeof(servaddr))) < 0) {
                 fprintf(stderr, "Function bind() failed!\n");
                 close(listenSock);
                 exit(1);
@@ -82,24 +78,19 @@ main ()
         initmsg.sinit_num_ostreams = 5;  //a maximum of 5 output streams in the sctp association
         initmsg.sinit_max_instreams = 5; //a maximum of 5 input streams in the sctp association
 
-        ret = setsockopt(listenSock, IPPROTO_SCTP, SCTP_INITMSG, &initmsg, sizeof(initmsg));
-        if(ret == -1)
-	{
+        if ((ret = setsockopt(listenSock, IPPROTO_SCTP, SCTP_INITMSG, &initmsg, sizeof(initmsg))) < 0) {
 		fprintf(stderr, "Function setsockopt() failed!\n");
                 close(listenSock);
                 exit(1);
         }
 
-	ret = listen(listenSock, 5);
-        if(ret == -1)
-        {
+	if ((ret = listen(listenSock, 5)) < 0) {
                 fprintf(stderr, "Function listen() failed!\n");
                 close(listenSock);
                 exit(1);
         }
 
-        while(1)
-	{
+        while(1) {
 		char buffer[BUFFER+1];
 		int len;
 
@@ -107,26 +98,21 @@ main ()
                 memset(&buffer, 0, (BUFFER+1));
                 fprintf(stdout, "Listening for connections...\n");
 
-                connSock = accept(listenSock, (struct sockaddr *) NULL, (socklen_t *) NULL);
-                if (connSock == -1)
-                {
+                if ((connSock = accept(listenSock, (struct sockaddr *) NULL, (socklen_t *) NULL)) == -1) {
                         fprintf(stderr, "Function accept() failed!\n");
                         close(connSock);
                         exit(1);
                 }
-                else
-                {
+                else {
                         fprintf(stdout, "Received a connection...\n");
                         in = sctp_recvmsg(connSock, buffer, sizeof(buffer), (struct sockaddr *) NULL, 0, &sndrcvinfo, &flags);
                 }
-                if(in == -1)
-                {
+                if(in == -1) {
                         fprintf(stderr, "Function sctp_recvmsg() failed!\n");
                         close(connSock);
                         exit(1);
                 }
-                else
-                {
+                else {
                         //NULL terminate the buffer
                         buffer[in] = '\0';
                         fprintf(stdout, "Length of data sent = %d\n", in);
