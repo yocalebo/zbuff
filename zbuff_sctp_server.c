@@ -98,7 +98,7 @@ main ()
                 memset(&buffer, 0, (BUFFER+1));
                 fprintf(stdout, "Listening for connections...\n");
 
-                if ((connSock = accept(listenSock, (struct sockaddr *) NULL, (socklen_t *) NULL)) == -1) {
+                if ((connSock = accept(listenSock, (struct sockaddr *) NULL, (socklen_t *) NULL)) < 0) {
                         fprintf(stderr, "Function accept() failed!\n");
                         close(connSock);
                         exit(1);
@@ -107,7 +107,7 @@ main ()
                         fprintf(stdout, "Received a connection...\n");
                         in = sctp_recvmsg(connSock, buffer, sizeof(buffer), (struct sockaddr *) NULL, 0, &sndrcvinfo, &flags);
                 }
-                if(in == -1) {
+                if(in < 0) {
                         fprintf(stderr, "Function sctp_recvmsg() failed!\n");
                         close(connSock);
                         exit(1);
