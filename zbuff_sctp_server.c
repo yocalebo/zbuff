@@ -38,7 +38,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.*/
 #include <netinet/in.h>
 #include <netinet/sctp.h>
 #define BUFFER  1048576 //1MB sized buffer, eventually make this CLI option 
-/*#define PORT 7000    static port number, eventually make this CLI option*/
 
 int
 main (int argc, char *argv[])
