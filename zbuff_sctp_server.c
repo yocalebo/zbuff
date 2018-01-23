@@ -38,14 +38,15 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.*/
 #include <netinet/in.h>
 #include <netinet/sctp.h>
 #define BUFFER  1048576 //1MB sized buffer, eventually make this CLI option 
-#define PORT 7000    //static port number, eventually make this CLI option
+/*#define PORT 7000    static port number, eventually make this CLI option*/
 
 int
-main ()
+main (int argc, char *argv[])
 {
         int listenSock;
 	int connSock;
 	int ret;
+	int port;
 	int in;
 	int flags;
 	int i;
@@ -54,6 +55,19 @@ main ()
         struct sctp_event_subscribe events;
         struct sctp_sndrcvinfo sndrcvinfo;
         char buffer[BUFFER+1];
+
+	if(argc != 2) {
+		fprintf(stderr, "Usage: %s **PORT**\n", argv[0]);
+		exit(1);
+	}
+	
+	if(argc == 2) {
+		port = atoi(argv[1]);
+		if(port < 1 || port > 65535) {
+			fprintf(stderr, "Valid ports are between 1 and 65535.\n");
+			exit(1);
+		}
+	}
 
         if ((listenSock = socket(AF_INET, SOCK_STREAM, IPPROTO_SCTP)) < 0) {
 		fprintf(stderr, "Function socket() failed!\n");
@@ -64,7 +78,7 @@ main ()
         memset(&servaddr, 0, sizeof(servaddr));
         servaddr.sin_family = AF_INET;
         servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
-        servaddr.sin_port = htons(PORT);
+        servaddr.sin_port = htons(port);
 
         if ((ret = bind(listenSock, (struct sockaddr *) &servaddr, sizeof(servaddr))) < 0) {
                 fprintf(stderr, "Function bind() failed!\n");
