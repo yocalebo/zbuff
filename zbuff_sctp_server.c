@@ -42,24 +42,19 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.*/
 int
 main (int argc, char *argv[])
 {
-        int listenSock;
-	int connSock;
-	int ret;
-	int port;
-	int in;
-	int flags;
-	int i;
-        struct sockaddr_in servaddr;
+        int listenSock, connSock, ret;
+	int port, in, flags, i;
+	struct sockaddr_in servaddr;
         struct sctp_initmsg initmsg;
         struct sctp_event_subscribe events;
         struct sctp_sndrcvinfo sndrcvinfo;
-        char buffer[BUFFER+1];
 
+	//make sure 2 args are given, minimally
 	if(argc != 2) {
 		fprintf(stderr, "Usage: %s **PORT**\n", argv[0]);
 		exit(1);
 	}
-	
+	//make sure port number exist
 	if(argc == 2) {
 		port = atoi(argv[1]);
 		if(port < 1 || port > 65535) {
@@ -128,7 +123,7 @@ main (int argc, char *argv[])
                 else {
                         //NULL terminate the buffer
                         buffer[in] = '\0';
-                        fprintf(stdout, "Length of data sent = %d\n", in);
+                        fprintf(stdout, "Length of data sent = %d Bytes\n", in);
                         fprintf(stdout, "Data in buffer = %s\n", (char *) buffer);
                 }
 	

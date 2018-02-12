@@ -8,7 +8,7 @@
 #include <netinet/sctp.h>
 #include <arpa/inet.h>
 #define BUFFER 1048576 //1MB sized buffer, eventually make this CLI option
-#define PORT 7000   //static port number, eventually make this CLI option
+#define PORT 5000   //static port number, eventually make this CLI option
  
 int main (int argc, char* argv[])
 {
@@ -41,7 +41,7 @@ int main (int argc, char* argv[])
 	memset(&servaddr, 0, sizeof(servaddr));
 	servaddr.sin_family = AF_INET;
 	servaddr.sin_port = htons(PORT);
-	servaddr.sin_addr.s_addr = inet_addr("192.168.1.231");
+	servaddr.sin_addr.s_addr = inet_addr("127.0.0.1");
 
 	ret = connect(connSock, (struct sockaddr *) &servaddr, sizeof(servaddr));
 	if (ret == -1)
