@@ -14,4 +14,4 @@ Some of the reasons for choosing SCTP are as follows:
 Future work
 - Add the ability to choose between TCP/UDP
 - Add the ability to use DTLS to encrypt data chunks per RFC 4347
-- Add the ability to offload crypto functions to Intel QAT cards or via AES-NI instruction sets on CPU
+- Add the ability to offload crypto functions via AES-NI instruction sets on CPU
